@@ -1,0 +1,29 @@
+services:
+  timescale:
+    # In order to make backups work production and development must both use the exact same image
+    image: timescale/timescaledb:2.13.1-pg16
+    environment:
+      POSTGRES_DB: ${BACKEND_DATABASE_NAME:-backend}
+      POSTGRES_USER: ${BACKEND_DATABASE_USER:-backend}
+      POSTGRES_PASSWORD: ${BACKEND_DATABASE_PASSWORD:-backend}
+    volumes:
+      - timescale-data:/var/lib/postgresql/data
+    ports:
+      - ${TIMESCALE_PORT:-61232}:5432
+
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${BACKEND_DATABASE_USER:-backend}@timescale.ct
+      PGADMIN_DEFAULT_PASSWORD: ${BACKEND_DATABASE_PASSWORD:-backend}
+      PGADMIN_DISABLE_POSTFIX: true
+    depends_on:
+      - timescale
+    volumes:
+      - pgadmin-data:/var/lib/pgadmin
+    ports:
+      - 61290:80
+
+volumes:
+  timescale-data:
+  pgadmin-data:
