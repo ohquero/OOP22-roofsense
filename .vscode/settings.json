@@ -2,9 +2,6 @@
     "editor.rulers": [
         120
     ],
-    "java.project.sourcePaths": [
-        "./app/src/main/java/"
-    ],
     "java.compile.nullAnalysis.mode": "automatic",
-    "java.configuration.updateBuildConfiguration": "automatic"
+    "java.configuration.updateBuildConfiguration": "interactive"
 }
